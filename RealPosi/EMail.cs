@@ -150,12 +150,14 @@ namespace RealPosi
         {
             try
             {
-                string subjectInfo = "RealPosi程序消息";
-                string bodyInfo = DateTime.Now.ToString() + " Info : \r\n " + msg;
+                //string subjectInfo = "RealPosi程序消息";
+                //string bodyInfo = DateTime.Now.ToString() + " Info : \r\n " + msg;
+                string subjectInfo = "错误信息";
+                string bodyInfo =  "发生了一个错误";
                 //string attachPath = "E:\\123123.txt; E:\\haha.pdf";
 
                 MyEmail email = new MyEmail(EMailConfig["MailSenderServerIp"], EMailConfig["MailPort"], EMailConfig["MailUsername"], EMailConfig["MailPassword"], EMailConfig["MailToAddress"], EMailConfig["MailFromAddress"],EMailConfig["MailSSLEnable"] == "true", EMailConfig["MailPwdCheckEnable"] == "true", subjectInfo, bodyInfo);
-                //email.mEnableSsl = true;
+                email.mEnableSsl = true;
                 email.Send();
             }
             catch (Exception ex)
