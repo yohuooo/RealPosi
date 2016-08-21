@@ -38,6 +38,21 @@ namespace RealPosi
             return AllConfig_Sort["MySQLConnection"].ToString();
         }
 
+        public static SortedDictionary<string, string> Load_EMailConfig()
+        {
+            SortedDictionary<string, string> EMailConfig = new SortedDictionary<string, string>();
+            EMailConfig.Add("MailSenderServerIp", AllConfig_Sort["MailSenderServerIp"]);
+            EMailConfig.Add("MailPort", AllConfig_Sort["MailPort"]);
+            EMailConfig.Add("MailUsername", AllConfig_Sort["MailUsername"]);
+            EMailConfig.Add("MailPassword", AllConfig_Sort["MailPassword"]);
+            EMailConfig.Add("MailToAddress", AllConfig_Sort["MailToAddress"]);
+            EMailConfig.Add("MailFromAddress", AllConfig_Sort["MailFromAddress"]);
+            EMailConfig.Add("MailSSLEnable", AllConfig_Sort["MailSSLEnable"]);
+            EMailConfig.Add("MailPwdCheckEnable", AllConfig_Sort["MailPwdCheckEnable"]);
+            return EMailConfig;
+
+        }
+
 
 
 

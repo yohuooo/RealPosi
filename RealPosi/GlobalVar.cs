@@ -10,6 +10,7 @@ namespace RealPosi
     public class GlobalVar
     {
         public static string SQLConnectionString;
+        public static SortedDictionary<string,string> EMailConfig = new SortedDictionary<string, string>();
 
         public static Account AccountID = new Account();
 

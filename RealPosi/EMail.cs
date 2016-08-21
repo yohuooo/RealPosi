@@ -58,7 +58,7 @@ namespace RealPosi
         ///<param name="port">发送邮件所用的端口号（htmp协议默认为25）</param>
         ///<param name="sslEnable">true表示对邮件内容进行socket层加密传输，false表示不加密</param>
         ///<param name="pwdCheckEnable">true表示对发件人邮箱进行密码验证，false表示不对发件人邮箱进行密码验证</param>
-        public MyEmail(string server, string toMail, string fromMail, string subject, string emailBody, string username, string password, string port, bool sslEnable, bool pwdCheckEnable)
+        public MyEmail(string server, string port, string username, string password, string toMail, string fromMail, bool sslEnable, bool pwdCheckEnable, string subject, string emailBody)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace RealPosi
                     //mSmtpClient.Host = "smtp." + mMailMessage.From.Host;
                     mSmtpClient.Host = this.mSenderServerHost;
                     mSmtpClient.Port = this.mSenderPort;
-                    mSmtpClient.UseDefaultCredentials = false;
+                    mSmtpClient.UseDefaultCredentials = true;
                     mSmtpClient.EnableSsl = this.mEnableSsl;
                     if (this.mEnablePwdAuthentication)
                     {
@@ -146,23 +146,16 @@ namespace RealPosi
             }
         }
 
-        public static void DefualtSendMail(string msg)
+        public static void DefualtSendMail(string msg,SortedDictionary<string,string> EMailConfig)
         {
             try
             {
-                string senderServerIp = "smtp.163.com";
-                string toMailAddress = "clliu@qq.com,lcl@myftfund.com";
-                string fromMailAddress = "fttz888888@163.com";
-                string subjectInfo = "RealPosi.exe Massages";
-                string bodyInfo = DateTime.Now.ToString() + " RealPosi.exe info : \r\n "+ msg;
-                string mailUsername = "fttz888888";
-                string mailPassword = "ft8888"; //发送邮箱的密码（）
-                string mailPort = "25";
+                string subjectInfo = "RealPosi程序消息";
+                string bodyInfo = DateTime.Now.ToString() + " Info : \r\n " + msg;
                 //string attachPath = "E:\\123123.txt; E:\\haha.pdf";
 
-                MyEmail email = new MyEmail(senderServerIp, toMailAddress, fromMailAddress, subjectInfo, bodyInfo, mailUsername, mailPassword, mailPort, false, false);
-                //email.AddAttachments(attachPath);
-                email.mEnableSsl = true;
+                MyEmail email = new MyEmail(EMailConfig["MailSenderServerIp"], EMailConfig["MailPort"], EMailConfig["MailUsername"], EMailConfig["MailPassword"], EMailConfig["MailToAddress"], EMailConfig["MailFromAddress"],EMailConfig["MailSSLEnable"] == "true", EMailConfig["MailPwdCheckEnable"] == "true", subjectInfo, bodyInfo);
+                //email.mEnableSsl = true;
                 email.Send();
             }
             catch (Exception ex)

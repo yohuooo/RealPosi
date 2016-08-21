@@ -513,7 +513,7 @@ namespace RealPosi
             IsErrorRspInfo(pRspInfo);
             //Console.WriteLine("OnRspError发生错误：" + pRspInfo.ErrorMsg);
             Logger.WriteLog_text("--->>> OnRspError发生错误：" + pRspInfo.ErrorMsg);
-            MyEmail.DefualtSendMail("--->>> OnRspError发生错误：" + pRspInfo.ErrorMsg);
+            MyEmail.DefualtSendMail("--->>> OnRspError发生错误：" + pRspInfo.ErrorMsg , GlobalVar.EMailConfig);
             Logger.WriteLog_text("--->>> 2秒后，重新执行 ReqQryInstrument()");
             Thread.Sleep(2000);
             ReqQryInstrument();

@@ -26,10 +26,11 @@ namespace RealPosi
                 if (DateTime.Now.DayOfWeek.ToString() == "Sunday" || DateTime.Now.DayOfWeek.ToString() == "Saturday" || DateTime.Now.Hour > 17 || DateTime.Now.Hour < 8)
                 {
                     Logger.WriteLog_text("现在不在工作时间（周一至周五，08:00~17:00）。程序退出 \r\n");
-                    return;
+                    //return;
                 }
                 Config.Load_ConfigFile();   // Load Config file
                 GlobalVar.SQLConnectionString = Config.Load_MySQLConnection();
+                GlobalVar.EMailConfig = Config.Load_EMailConfig();
                 GlobalVar.Sqli = new SQLi(GlobalVar.SQLConnectionString);    //要在Load_MySQLConnection后实例化
                 List<Account> Account_List = GlobalVar.Sqli.Load_Account();  //读 "SELECT * FROM portfolio.real_account where AccountType='CTP' and ENABLE = 1"
                 foreach (Account ac in Account_List)
@@ -49,7 +50,7 @@ namespace RealPosi
                     else
                     {
                         Logger.WriteLog_text("程序没有正常获取到合约、持仓等数据。自动退出\r\n");
-                        MyEmail.DefualtSendMail("程序没有正常获取到合约、持仓等数据。自动退出\r\n");
+                        MyEmail.DefualtSendMail("程序没有正常获取到合约、持仓等数据。自动退出\r\n", GlobalVar.EMailConfig);
                     }
                 }
                 Td = null;
@@ -62,7 +63,7 @@ namespace RealPosi
             catch (Exception e)
             {
                 Logger.WriteLog_text("程序异常退出，信息：" + e.Message + "\r\n");
-                MyEmail.DefualtSendMail("程序异常退出，信息：" + e.Message + "\r\n");
+                MyEmail.DefualtSendMail("程序异常退出，信息：" + e.Message + "\r\n", GlobalVar.EMailConfig);
             }
 
             Console.ReadKey();
